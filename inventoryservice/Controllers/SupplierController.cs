@@ -7,7 +7,8 @@ using System.Transactions;
 
 namespace inventoryservice.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class SupplierController : ControllerBase
     {
