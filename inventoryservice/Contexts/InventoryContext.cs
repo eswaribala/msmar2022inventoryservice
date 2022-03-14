@@ -16,7 +16,8 @@ namespace inventoryservice.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Product>().HasOne(p => p.Supplier);
+            modelBuilder.Entity<Product>().HasKey(p => p.Supplier);
+
         }
     }
 }
