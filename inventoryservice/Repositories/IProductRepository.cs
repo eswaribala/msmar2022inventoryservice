@@ -2,7 +2,7 @@
 
 namespace inventoryservice.Repositories
 {
-    public interface ProductRepository
+    public interface IProductRepository
     {
         //CRUD
 

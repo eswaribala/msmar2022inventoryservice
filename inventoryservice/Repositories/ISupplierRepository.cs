@@ -2,7 +2,7 @@
 
 namespace inventoryservice.Repositories
 {
-    public interface SupplierRepository
+    public interface ISupplierRepository
     {
         Task<IEnumerable<Supplier>> GetSuppliers();
         Task<Supplier> GetSupplier(long SupplierId);
