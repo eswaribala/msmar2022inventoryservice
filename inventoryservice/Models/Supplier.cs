@@ -8,6 +8,7 @@ namespace inventoryservice.Models
         public long SupplierId { get; set; }
         public string SupplierName { get; set; }
 
+     
 
 
     }
