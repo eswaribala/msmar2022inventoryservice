@@ -14,6 +14,11 @@ namespace inventoryservice.Models
         //value object
         public ProductDescription ProductDescription { get; set; }
 
+        [ForeignKey("Supplier")]
+        [Column("Supplier_Id")]
+        public long SupplierId { get; set; }
+        public Supplier Supplier { get; set; }
+
      
     }
 }
