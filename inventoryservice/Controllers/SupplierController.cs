@@ -21,14 +21,14 @@ namespace inventoryservice.Controllers
 
         // GET: api/<SupplierController>
         [HttpGet]
-        public Task<IEnumerable<Supplier>> Get()
+        public IEnumerable<Supplier> Get()
         {
             return SupplierRepository.GetSuppliers();
         }
 
         // GET api/<SupplierController>/5
         [HttpGet("{SupplierId}")]
-        public Task<Supplier> Get(long SupplierId)
+        public Supplier Get(long SupplierId)
         {
             return SupplierRepository.GetSupplier(SupplierId);
         }
@@ -41,7 +41,7 @@ namespace inventoryservice.Controllers
             {
                 SupplierRepository.AddSupplier(Supplier);
                 scope.Complete();
-                return CreatedAtAction(nameof(Get),
+               return CreatedAtAction(nameof(Get),
                     new { id = Supplier.SupplierId}, Supplier);
             }
         }
