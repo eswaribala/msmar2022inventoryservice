@@ -1,32 +1,70 @@
-﻿using inventoryservice.Models;
+﻿using inventoryservice.Contexts;
+using inventoryservice.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace inventoryservice.Repositories
 {
     public class ProductRepository : IProductRepository
     {
-        public Task<Product> AddProduct(Product Product)
+        private readonly InventoryContext DbContext;
+
+        public ProductRepository(InventoryContext dbContext)
         {
-            throw new NotImplementedException();
+            DbContext = dbContext;
         }
 
-        public void DeleteProduct(long ProductId)
+
+         public async Task<Product> AddProduct(Product Product)
         {
-            throw new NotImplementedException();
+            var result=DbContext.Products.Add(Product);
+            await DbContext.SaveChangesAsync();
+            return result.Entity;
+
         }
 
-        public Task<Product> GetProduct(long ProductId)
+        public async void DeleteProduct(long ProductId)
         {
-            throw new NotImplementedException();
+            var result = await DbContext.Products
+               .FirstOrDefaultAsync(p => p.ProductId == ProductId);
+            if (result != null)
+            {
+                DbContext.Products.Remove(result);
+                await DbContext.SaveChangesAsync();
+            }
         }
 
-        public Task<IEnumerable<Product>> GetProducts()
+        public async Task<Product> GetProduct(long ProductId)
         {
-            throw new NotImplementedException();
+            var result = await DbContext.Products
+               .FirstOrDefaultAsync(p => p.ProductId == ProductId);
+            if (result != null)
+                return result;
+            return null;
         }
 
-        public Task<Product> UpdateProduct(Product Product)
+        public async Task<IEnumerable<Product>> GetProducts()
         {
-            throw new NotImplementedException();
+            return await DbContext.Products.ToListAsync();
+           
+        }
+
+        public async Task<Product> UpdateProduct(Product Product)
+        {
+            var result = await DbContext.Products
+                .FirstOrDefaultAsync(p => p.ProductId == Product.ProductId);
+
+            if (result != null)
+            {
+                result.ProductDescription = Product.ProductDescription;
+                
+
+
+                await DbContext.SaveChangesAsync();
+
+                return result;
+            }
+
+            return null;
         }
     }
 }

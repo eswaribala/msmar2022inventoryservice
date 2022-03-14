@@ -49,7 +49,7 @@ namespace inventoryservice.Repositories
         public async Task<Supplier> UpdateSupplier(Supplier Supplier)
         {
             var result = await DbContext.Suppliers
-                .FirstOrDefaultAsync(e => e.SupplierId == Supplier.SupplierId);
+                .FirstOrDefaultAsync(s => s.SupplierId == Supplier.SupplierId);
 
             if (result != null)
             {
