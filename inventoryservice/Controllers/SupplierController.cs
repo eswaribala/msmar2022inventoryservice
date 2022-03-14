@@ -37,13 +37,12 @@ namespace inventoryservice.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Supplier Supplier)
         {
-            using (var scope = new TransactionScope())
-            {
+           
                 SupplierRepository.AddSupplier(Supplier);
-                scope.Complete();
+               
                return CreatedAtAction(nameof(Get),
                     new { id = Supplier.SupplierId}, Supplier);
-            }
+            
         }
 
         // PUT api/<SupplierController>/5

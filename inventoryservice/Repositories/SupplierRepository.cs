@@ -15,8 +15,8 @@ namespace inventoryservice.Repositories
 
         public Supplier AddSupplier(Supplier Supplier)
         {
-            DbContext.Suppliers.AddAsync(Supplier);
-            DbContext.SaveChangesAsync();
+            DbContext.Suppliers.Add(Supplier);
+            DbContext.SaveChanges();
             return Supplier;
 
         }
