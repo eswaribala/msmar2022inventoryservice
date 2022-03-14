@@ -1,5 +1,7 @@
+using inventoryservice.Contexts;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+var connectionString = builder.Configuration.GetConnectionString("InventoryConnection");
+builder.Services.AddDbContext<InventoryContext>(x => x.UseSqlServer(connectionString));
 builder.Services.AddApiVersioning();
 builder.Services.AddApiVersioning(x =>
 {
