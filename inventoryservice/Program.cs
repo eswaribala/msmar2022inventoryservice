@@ -1,4 +1,5 @@
 using inventoryservice.Contexts;
+using inventoryservice.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
@@ -11,12 +12,15 @@ builder.Services.AddEndpointsApiExplorer();
 var connectionString = builder.Configuration.GetConnectionString("InventoryConnection");
 builder.Services.AddDbContext<InventoryContext>(x => x.UseSqlServer(connectionString));
 builder.Services.AddApiVersioning();
-builder.Services.AddApiVersioning(x =>
-{
-    x.DefaultApiVersion = new ApiVersion(1, 0);
-    x.AssumeDefaultVersionWhenUnspecified = true;
-    x.ReportApiVersions = true;
-});
+
+builder.Services.AddTransient<ISupplierRepository, SupplierRepository>();
+builder.Services.AddTransient<IProductRepository,ProductRepository>();
+//builder.Services.AddApiVersioning(x =>
+//{
+//    x.DefaultApiVersion = new ApiVersion(1, 0);
+//    x.AssumeDefaultVersionWhenUnspecified = true;
+//    x.ReportApiVersions = true;
+//});
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
