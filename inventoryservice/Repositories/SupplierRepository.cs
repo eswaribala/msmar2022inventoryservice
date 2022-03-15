@@ -15,20 +15,20 @@ namespace inventoryservice.Repositories
 
         public async Task<Supplier> AddSupplier(Supplier Supplier)
         {
-            var result=DbContext.Suppliers.Add(Supplier);
+            var result=await DbContext.Suppliers.AddAsync(Supplier);
             await DbContext.SaveChangesAsync();
             return result.Entity;
 
         }
 
-        public async void DeleteSupplier(long SupplierId)
+        public void DeleteSupplier(long SupplierId)
         {
-            var result = await DbContext.Suppliers
-                .FirstOrDefaultAsync(s => s.SupplierId == SupplierId);
+            var result =  DbContext.Suppliers
+                .FirstOrDefault(s => s.SupplierId == SupplierId);
             if (result != null)
             {
                 DbContext.Suppliers.Remove(result);
-                await DbContext.SaveChangesAsync();
+                 DbContext.SaveChanges();
             }
         }
 
