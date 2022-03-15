@@ -13,46 +13,56 @@ namespace inventoryservice.Repositories
             DbContext = inventoryContext;
         }
 
-        public Supplier AddSupplier(Supplier Supplier)
+        public async Task<Supplier> AddSupplier(Supplier Supplier)
         {
-            DbContext.Suppliers.Add(Supplier);
-            DbContext.SaveChanges();
-            return Supplier;
+            var result=DbContext.Suppliers.Add(Supplier);
+            await DbContext.SaveChangesAsync();
+            return result.Entity;
 
         }
 
-        public Boolean DeleteSupplier(long SupplierId)
+        public async void DeleteSupplier(long SupplierId)
         {
-            bool status = false;
-            var supplier = DbContext.Suppliers.Find(SupplierId);
-            DbContext.Suppliers.Remove(supplier);
-            DbContext.SaveChanges();
-            if (GetSupplier(SupplierId) == null)
-                status = true;
-            return status;
+            var result = await DbContext.Suppliers
+                .FirstOrDefaultAsync(s => s.SupplierId == SupplierId);
+            if (result != null)
+            {
+                DbContext.Suppliers.Remove(result);
+                await DbContext.SaveChangesAsync();
+            }
         }
 
-        public Supplier GetSupplier(long SupplierId)
+        public async Task<Supplier> GetSupplier(long SupplierId)
         {
-            var supplier = DbContext.Suppliers
-             
-            .FirstOrDefault(x => x.SupplierId == SupplierId);
-            return supplier;
+            var result = await DbContext.Suppliers
+              .FirstOrDefaultAsync(s => s.SupplierId == SupplierId);
+            if (result != null)
+                return result;
+            return null;
         }
 
-        public IEnumerable<Supplier> GetSuppliers()
+        public async Task<IEnumerable<Supplier>> GetSuppliers()
         {
-            return DbContext.Suppliers.ToList();
+            return await DbContext.Suppliers.ToListAsync();
         }
 
-        public Supplier UpdateSupplier(Supplier Supplier)
+        public async Task<Supplier> UpdateSupplier(Supplier Supplier)
         {
-           DbContext.Suppliers
-                .FirstOrDefaultAsync(s => s.SupplierId == Supplier.SupplierId);
+            var result = await DbContext.Suppliers
+                 .FirstOrDefaultAsync(s => s.SupplierId == Supplier.SupplierId);
 
-           
+            if (result != null)
+            {
+                result.SupplierName = Supplier.SupplierName;
 
-            return Supplier;
+
+
+                await DbContext.SaveChangesAsync();
+
+                return result;
+            }
+
+            return null;
         }
     }
 }

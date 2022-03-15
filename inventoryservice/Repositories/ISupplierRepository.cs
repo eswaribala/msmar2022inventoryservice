@@ -4,10 +4,10 @@ namespace inventoryservice.Repositories
 {
     public interface ISupplierRepository
     {
-        IEnumerable<Supplier> GetSuppliers();
-         Supplier GetSupplier(long SupplierId);
-        Supplier AddSupplier(Supplier Supplier);
-        Supplier UpdateSupplier(Supplier Supplier);
-        Boolean DeleteSupplier(long SupplierId);
+        Task<IEnumerable<Supplier>> GetSuppliers();
+        Task<Supplier> GetSupplier(long SupplierId);
+        Task<Supplier> AddSupplier(Supplier Supplier);
+        Task<Supplier> UpdateSupplier(Supplier Supplier);
+        void DeleteSupplier(long SupplierId);
     }
 }

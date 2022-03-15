@@ -21,14 +21,14 @@ namespace inventoryservice.Controllers
 
         // GET: api/<SupplierController>
         [HttpGet]
-        public IEnumerable<Supplier> Get()
+        public Task<IEnumerable<Supplier>> Get()
         {
             return SupplierRepository.GetSuppliers();
         }
 
         // GET api/<SupplierController>/5
         [HttpGet("{SupplierId}")]
-        public Supplier Get(long SupplierId)
+        public Task<Supplier> Get(long SupplierId)
         {
             return SupplierRepository.GetSupplier(SupplierId);
         }
